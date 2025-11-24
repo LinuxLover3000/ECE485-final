@@ -27,14 +27,20 @@ architecture behavioral of MIPS_CPU is
     signal ALUOp: STD_LOGIC_VECTOR(2 downto 0);
     signal ALUSrc: STD_LOGIC;
     signal ALU_out: STD_LOGIC_VECTOR(31 downto 0);
+    signal ALU_zero: STD_LOGIC;
 
     signal MemtoReg: STD_LOGIC;
     signal DataMem_out: STD_LOGIC_VECTOR(31 downto 0);
     signal MemRead: STD_LOGIC;
     signal MemWrite: STD_LOGIC;
+    signal Branch: STD_LOGIC;
 
     -- Entity instantiation
     begin
+        PC_plus_1 <= std_logic_vector(unsigned(new_PC) + 1);
+        branch_address <= std_logic_vector(unsigned(PC_plus_1) + signed(SignExt_out));
+
+
         -- Memory units (InstructionMemory, RegisterFile, DataMemory)
         InstructionMemory: entity work.InstructionMemory(rtl)
             port map(
@@ -72,7 +78,7 @@ architecture behavioral of MIPS_CPU is
                 A => ALU_A_in,
                 B => ALU_B_in,
                 result => ALU_out,
-                zero =>
+                zero => ALU_zero
             );
         -- PC, SignExtension
         PC: entity work.PC(rtl)
@@ -123,5 +129,15 @@ architecture behavioral of MIPS_CPU is
                 y => WriteReg_in
             );
     
+        PCSrc_mux: entity work.mux_2to1(rtl)
+            generic map(
+
+            )
+            port map(
+                sel => ALU_zero and Branch,
+                a => PC_plus_1,
+                b => branch_address,
+                y => PCSrc_out
+            );
 
 end behavioral;
