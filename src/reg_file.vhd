@@ -29,10 +29,10 @@ architecture behavioral of RegisterFile is
             else
                 if rising_edge(clk) then
                     if reg_write = '1' then
-                        mem(to_integer(write_register)) <= write_data;
+                        mem(to_integer(unsigned(write_register))) <= write_data;
                     end if;
-                    read_data_1 <= mem(to_integer(read_register_1));
-                    read_data_2 <= mem(to_integer(read_register_2));
+                    read_data_1 <= mem(to_integer(unsigned(read_register_1)));
+                    read_data_2 <= mem(to_integer(unsigned(read_register_2)));
                 end if;
             end if;
         end process;
