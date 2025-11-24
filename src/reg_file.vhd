@@ -6,7 +6,6 @@ entity RegisterFile is
     Port(
         clk: in STD_LOGIC;
         reg_write: in STD_LOGIC;
-        addr: in STD_LOGIC_VECTOR(31 downto 0);
         read_register_1: in STD_LOGIC_VECTOR(4 downto 0);
         read_register_2: in STD_LOGIC_VECTOR(4 downto 0);
         write_register: in STD_LOGIC_VECTOR(4 downto 0);
