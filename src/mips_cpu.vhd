@@ -93,7 +93,6 @@ architecture behavioral of MIPS_CPU is
 
         SignExtension: entity work.SignExtension(rtl)
             port map(
-                clk => clk,
                 input => instr(15 downto 0),
                 output => SignExt_out
             );
