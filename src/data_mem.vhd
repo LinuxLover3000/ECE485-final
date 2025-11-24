@@ -7,7 +7,7 @@ entity DataMemory is
         clk: in STD_LOGIC;
         mem_write: in STD_LOGIC;
         mem_read: in STD_LOGIC := '1'; -- Read always enabled
-        addr in STD_LOGIC_VECTOR(31 downto 0);
+        addr: in STD_LOGIC_VECTOR(31 downto 0);
         write_data: in STD_LOGIC_VECTOR(31 downto 0);
         read_data: out STD_LOGIC_VECTOR(31 downto 0)
     );

@@ -6,7 +6,7 @@ entity PC is
     Port(
         clk: in STD_LOGIC;
         reset: in STD_LOGIC;
-        input in STD_LOGIC_VECTOR(31 downto 0);
+        input: in STD_LOGIC_VECTOR(31 downto 0);
         output: out STD_LOGIC_VECTOR(31 downto 0)
     );
 end PC;

@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity InstructionMemory is
     Port(
         clk: in STD_LOGIC;
-        read_addr in STD_LOGIC_VECTOR(31 downto 0);
+        read_addr: in STD_LOGIC_VECTOR(31 downto 0);
         instr: out STD_LOGIC_VECTOR(31 downto 0)
     );
 end InstructionMemory;
