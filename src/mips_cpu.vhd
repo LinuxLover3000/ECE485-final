@@ -18,6 +18,8 @@ architecture behavioral of MIPS_CPU is
     signal SignExt_out: STD_LOGIC_VECTOR(31 downto 0);
     signal MemtoReg_out: STD_LOGIC_VECTOR(31 downto 0);
     signal RegWrite: STD_LOGIC;
+    signal RegDst: STD_LOGIC;
+    signal WriteReg_in: STD_LOGIC_VECTOR(4 downto 0);
 
     signal ALU_A_in: STD_LOGIC_VECTOR(31 downto 0);
     signal ALUSrc_Reg_in: STD_LOGIC_VECTOR(31 downto 0);
@@ -45,9 +47,9 @@ architecture behavioral of MIPS_CPU is
             port map(
                 clk => clk,
                 reg_write => RegWrite,
-                read_register_1 => instr()
-                read_register_2 => instr()
-                write_register => instr()
+                read_register_1 => instr(25 downto 21), --rs
+                read_register_2 => instr(20 downto 16), --rt
+                write_register => WriteReg_in,
                 write_data => MemtoReg_out,
                 read_data_1 => ALU_A_in,
                 read_data_2 => ALUSrc_Reg_in
@@ -108,7 +110,18 @@ architecture behavioral of MIPS_CPU is
                 a => DataMem_out,
                 b => ALU_out,
                 y => MemtoReg_out
+            );
+
+        RegDst_mux: entity work.mux_2to1(rtl)
+            generic map(
+                WIDTH => 5
             )
+            port map(
+                sel => RegDst,
+                a => instr(20 downto 16),
+                b => instr(15 downto 11),
+                y => WriteReg_in
+            );
     
 
 end behavioral;
