@@ -17,22 +17,16 @@ end RegisterFile;
 
 architecture behavioral of RegisterFile is
     type memory_array is array (0 to 31) of STD_LOGIC_VECTOR(31 downto 0);
-    signal mem: memory_array;
+    signal mem: memory_array := (others => x"00000000");
 
     begin
+        read_data_1 <= mem(to_integer(unsigned(read_register_1)));
+        read_data_2 <= mem(to_integer(unsigned(read_register_2)));
+
         process(clk) is
-            variable INITIALIZED: boolean := false;
-            
-            if not INITIALIZED then
-                mem <= (others => x"00000000");
-                INITIALIZED := true;
-            else
-                if rising_edge(clk) then
-                    if reg_write = '1' then
-                        mem(to_integer(unsigned(write_register))) <= write_data;
-                    end if;
-                    read_data_1 <= mem(to_integer(unsigned(read_register_1)));
-                    read_data_2 <= mem(to_integer(unsigned(read_register_2)));
+            if rising_edge(clk) then
+                if reg_write = '1' then
+                    mem(to_integer(unsigned(write_register))) <= write_data;
                 end if;
             end if;
         end process;
