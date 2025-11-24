@@ -24,11 +24,12 @@ architecture behavioral of RegisterFile is
         read_data_2 <= mem(to_integer(unsigned(read_register_2)));
 
         process(clk) is
-            if rising_edge(clk) then
-                if reg_write = '1' then
-                    mem(to_integer(unsigned(write_register))) <= write_data;
+            begin
+                if rising_edge(clk) then
+                    if reg_write = '1' then
+                        mem(to_integer(unsigned(write_register))) <= write_data;
+                    end if;
                 end if;
-            end if;
         end process;
         
 
