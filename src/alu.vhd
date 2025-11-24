@@ -29,11 +29,15 @@ architecture behavioral of ALU is
                     when "100" => -- ori
                         result <= A or B;
                     when "101" => -- srl
-                        result <= A srl B;
+                        result <= std_logic_vector(unsigned(A) srl to_integer(B));
                     when others =>
                         result <= (others => '0');
                 end case;
-                zero <= '1' when (unsigned(result) = 0) else '0';
+                if unsigned(result) = 0 then
+                    zero <= '1';
+                else
+                    zero <= '0';
+                end if;
             end process;
         
 
