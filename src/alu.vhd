@@ -24,8 +24,8 @@ architecture behavioral of ALU is
                     --    result <= std_logic_vector(signed(A) + signed(B));
                     --when "010" => -- add
                     --    result <= std_logic_vector(signed(A) + signed(B));
-                    --when "011" => -- bne
-                    --    result <= std_logic_vector(signed(A) - signed(B));
+                    when "011" => -- bne
+                        result <= std_logic_vector(signed(A) - signed(B));
                     when "100" => -- ori
                         result <= A or B;
                     when "101" => -- srl

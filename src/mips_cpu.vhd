@@ -26,7 +26,8 @@ architecture behavioral of MIPS_CPU is
     signal ALU_A_in: STD_LOGIC_VECTOR(31 downto 0);
     signal ALUSrc_Reg_in: STD_LOGIC_VECTOR(31 downto 0);
     signal ALU_B_in: STD_LOGIC_VECTOR(31 downto 0);
-    signal ALUOp: STD_LOGIC_VECTOR(2 downto 0);
+    signal ALUOp: STD_LOGIC_VECTOR(1 downto 0);
+    signal ALUCtrl: STD_LOGIC_VECTOR(2 downto 0);
     signal ALUSrc: STD_LOGIC;
     signal ALU_out: STD_LOGIC_VECTOR(31 downto 0);
     signal ALU_zero: STD_LOGIC;
@@ -72,11 +73,33 @@ architecture behavioral of MIPS_CPU is
                 write_data => ALUSrc_Reg_in,
                 read_data => DataMem_out
             );
+        
+        ControlUnit: entity work.ControlUnit
+            port map(
+                opcode => instr(31 downto 27),
+                RegDst => RegDst,
+                RegWrite => RegWrite,
+                ALUSrc => ALUSrc,
+                MemRead => MemRead,
+                MemWrite => MemWrite,
+                MemtoReg => MemtoReg,
+                Branch => Branch,
+                ALUOp => ALUOp
+            );
+
+        ALUControl: entity work.ALUControl
+            port map(
+                ALUOp => ALUOp,
+                funct => instr(4 downto 0),
+                ALUCtrl => ALUCtrl
+            );
+
+
         -- ALU
         ALU: entity work.ALU
             port map(
                 clk => clk,
-                op => ALUOp,
+                op => ALUCtrl,
                 A => ALU_A_in,
                 B => ALU_B_in,
                 result => ALU_out,
