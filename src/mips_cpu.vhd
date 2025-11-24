@@ -76,7 +76,7 @@ architecture behavioral of MIPS_CPU is
         
         ControlUnit: entity work.ControlUnit
             port map(
-                opcode => instr(31 downto 27),
+                opcode => instr(31 downto 26),
                 RegDst => RegDst,
                 RegWrite => RegWrite,
                 ALUSrc => ALUSrc,
@@ -90,7 +90,7 @@ architecture behavioral of MIPS_CPU is
         ALUControl: entity work.ALUControl
             port map(
                 ALUOp => ALUOp,
-                funct => instr(4 downto 0),
+                funct => instr(5 downto 0),
                 ALUCtrl => ALUCtrl
             );
 
