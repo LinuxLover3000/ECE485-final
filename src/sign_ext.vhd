@@ -13,14 +13,6 @@ end SignExtension;
 architecture behavioral of SignExtension is
     signal extended_value: STD_LOGIC_VECTOR(31 downto 0);
     begin
-        process(clk)
-            variable sign_bit: STD_LOGIC := input(15);
-            begin
-                if rising_edge(clk) then
-                    extended_value <= ( 15 downto 0 => input(15 downto 0),
-                                        31 downto 16 => (others => sign_bit));
-                    output <= extended_value;
-                end if;
-        end process;
+        output <= (31 downto 16 => input(15)) & input;
 
 end behavioral;
