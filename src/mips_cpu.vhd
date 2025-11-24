@@ -5,7 +5,13 @@ use IEEE.NUMERIC_STD.ALL;
 entity MIPS_CPU is
     Port(
         clk: in std_logic;
-        reset: in std_logic
+        reset: in std_logic;
+
+        pc_out: out std_logic_vector(31 downto 0);
+        reg_t2: out std_logic_vector(31 downto 0); -- $t2 = reg 10
+        reg_t3: out std_logic_vector(31 downto 0); -- $t3 = reg 11
+        reg_t4: out std_logic_vector(31 downto 0); -- $t4 = reg 12
+        mem0_out: out std_logic_vector(31 downto 0)  -- memory[0]
     );
 end MIPS_CPU;
 
@@ -163,5 +169,12 @@ architecture behavioral of MIPS_CPU is
                 b => branch_address,
                 y => PCSrc_out
             );
+        
+        reg_t2 <= (others => '0');
+        reg_t3 <= (others => '0');
+        reg_t4 <= (others => '0');
+        --mem0_out <= DataMem_out when (ALU_out = (others => '0')) else DataMem_out;
+        mem0_out <= DataMem_out;
+
 
 end behavioral;
