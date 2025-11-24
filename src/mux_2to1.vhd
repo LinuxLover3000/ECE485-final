@@ -17,7 +17,7 @@ architecture behavioral of mux_2to1 is
 begin
     process(sel, a, b)
         begin
-            if sel = "0" then
+            if sel = '0' then
                 y <= a;
             else
                 y <= b;

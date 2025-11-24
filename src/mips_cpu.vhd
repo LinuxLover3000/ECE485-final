@@ -86,7 +86,7 @@ architecture behavioral of MIPS_CPU is
                 clk => clk,
                 input => instr(15 downto 0),
                 output => SignExt_out
-            )
+            );
         -- Muxes
         ALUSrc_mux: entity work.mux_2to1(rtl)
             generic map(
@@ -105,8 +105,8 @@ architecture behavioral of MIPS_CPU is
             )
             port map(
                 sel => MemtoReg,
-                a => DataMem_out
-                b => ALU_out
+                a => DataMem_out,
+                b => ALU_out,
                 y => MemtoReg_out
             )
     

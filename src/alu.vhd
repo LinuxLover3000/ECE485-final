@@ -8,7 +8,7 @@ entity ALU is
         op: in STD_LOGIC_VECTOR(2 downto 0);
         A: in STD_LOGIC_VECTOR(31 downto 0);
         B: in STD_LOGIC_VECTOR(31 downto 0);
-        result: out STD_LOGIC_VECTOR(31 downto 0)
+        result: out STD_LOGIC_VECTOR(31 downto 0);
         zero: out STD_LOGIC
     );
 end ALU;
