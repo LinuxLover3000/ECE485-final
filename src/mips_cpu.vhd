@@ -99,7 +99,7 @@ architecture behavioral of MIPS_CPU is
         -- Muxes
         ALUSrc_mux: entity work.mux_2to1(rtl)
             generic map(
-                -- leave blank for default?
+                WIDTH => 32
             )
             port map (
                 sel => ALUSrc,
@@ -110,7 +110,7 @@ architecture behavioral of MIPS_CPU is
         
         MemtoReg_mux: entity work.mux_2to1(rtl)
             generic map(
-
+                WIDTH => 32
             )
             port map(
                 sel => MemtoReg,
@@ -132,7 +132,7 @@ architecture behavioral of MIPS_CPU is
     
         PCSrc_mux: entity work.mux_2to1(rtl)
             generic map(
-
+                WIDTH => 32
             )
             port map(
                 sel => ALU_zero and Branch,
