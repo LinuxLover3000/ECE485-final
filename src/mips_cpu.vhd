@@ -40,18 +40,18 @@ architecture behavioral of MIPS_CPU is
     -- Entity instantiation
     begin
         PC_plus_1 <= std_logic_vector(unsigned(new_PC) + 1);
-        branch_address <= std_logic_vector(unsigned(PC_plus_1) + signed(SignExt_out));
+        branch_address <= std_logic_vector(signed(PC_plus_1) + signed(SignExt_out));
 
 
         -- Memory units (InstructionMemory, RegisterFile, DataMemory)
-        InstructionMemory: entity work.InstructionMemory(rtl)
+        InstructionMemory: entity work.InstructionMemory
             port map(
                 clk => clk,
                 read_addr => new_PC,
                 instr => instr
             );
         
-        RegisterFile: entity work.RegisterFile(rtl)
+        RegisterFile: entity work.RegisterFile
             port map(
                 clk => clk,
                 reg_write => RegWrite,
@@ -63,7 +63,7 @@ architecture behavioral of MIPS_CPU is
                 read_data_2 => ALUSrc_Reg_in
             );
         
-        DataMemory: entity work.DataMemory(rtl)
+        DataMemory: entity work.DataMemory
             port map(
                 clk => clk,
                 mem_write => MemWrite,
@@ -73,7 +73,7 @@ architecture behavioral of MIPS_CPU is
                 read_data => DataMem_out
             );
         -- ALU
-        ALU: entity work.ALU(rtl)
+        ALU: entity work.ALU
             port map(
                 clk => clk,
                 op => ALUOp,
@@ -83,7 +83,7 @@ architecture behavioral of MIPS_CPU is
                 zero => ALU_zero
             );
         -- PC, SignExtension
-        PC: entity work.PC(rtl)
+        PC: entity work.PC
             port map(
                 clk => clk,
                 reset => reset,
@@ -91,13 +91,13 @@ architecture behavioral of MIPS_CPU is
                 output => new_PC
             );
 
-        SignExtension: entity work.SignExtension(rtl)
+        SignExtension: entity work.SignExtension
             port map(
                 input => instr(15 downto 0),
                 output => SignExt_out
             );
         -- Muxes
-        ALUSrc_mux: entity work.mux_2to1(rtl)
+        ALUSrc_mux: entity work.mux_2to1
             generic map(
                 WIDTH => 32
             )
@@ -108,7 +108,7 @@ architecture behavioral of MIPS_CPU is
                 y => ALU_B_in
             );
         
-        MemtoReg_mux: entity work.mux_2to1(rtl)
+        MemtoReg_mux: entity work.mux_2to1
             generic map(
                 WIDTH => 32
             )
@@ -119,7 +119,7 @@ architecture behavioral of MIPS_CPU is
                 y => MemtoReg_out
             );
 
-        RegDst_mux: entity work.mux_2to1(rtl)
+        RegDst_mux: entity work.mux_2to1
             generic map(
                 WIDTH => 5
             )
@@ -130,12 +130,12 @@ architecture behavioral of MIPS_CPU is
                 y => WriteReg_in
             );
     
-        PCSrc_mux: entity work.mux_2to1(rtl)
+        PCSrc_mux: entity work.mux_2to1
             generic map(
                 WIDTH => 32
             )
             port map(
-                sel => ALU_zero and Branch,
+                sel => (ALU_zero and Branch),
                 a => PC_plus_1,
                 b => branch_address,
                 y => PCSrc_out
