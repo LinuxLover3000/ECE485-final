@@ -13,6 +13,8 @@ architecture behavioral of MIPS_CPU is
     -- Signal declaration
     signal instr: STD_LOGIC_VECTOR(31 downto 0);
     signal new_PC: STD_LOGIC_VECTOR(31 downto 0);
+    signal PC_plus_1: STD_LOGIC_VECTOR(31 downto 0);
+    signal branch_address: STD_LOGIC_VECTOR(31 downto 0);
 
     signal PCSrc_out: STD_LOGIC_VECTOR(31 downto 0);
     signal SignExt_out: STD_LOGIC_VECTOR(31 downto 0);
